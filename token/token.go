@@ -21,6 +21,7 @@ const (
 	INT   = "INT"   // numbas
 
 	// Operators
+	ASSIGN   = "="
 	PLUS     = "+"
 	MINUS    = "-"
 	MODULO   = "%"
