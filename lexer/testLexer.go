@@ -2,11 +2,12 @@ package lexer // defines our lexer package
 
 // go test ./... runs all tests in project
 // go mod tidy cleans up dependencies
+// := is a funky little guy
+// it can declare and initilaize a variable in a function in one step
 
 import (
-	"testing"
-
 	"monkey-interpreter/token"
+	"testing"
 )
 
 func TestNextToken(t *testing.T) {
@@ -22,11 +23,11 @@ func TestNextToken(t *testing.T) {
 		{token.LBRACE, "{"},
 		{token.RBRACE, "}"},
 		{token.COMMA, ","},
-		{token.SEMICOLON, ":"},
+		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}
 
-	l := New(input)
+	l := New(input) // you need to explicitly use package.function when using a method
 
 	for i, tt := range tests {
 		tok := l.NextToken()

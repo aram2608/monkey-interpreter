@@ -21,12 +21,12 @@ const (
 	INT   = "INT"   // numbas
 
 	// Operators
-	ASSIGN   = "="
-	PLUS     = "+"
-	MINUS    = "-"
-	MODULO   = "%"
-	MULTIPLY = "*"
-	DIVIDE   = "/"
+	ASSIGN = "="
+	PLUS   = "+"
+	MINUS  = "-"
+	//MODULO   = "%"
+	//MULTIPLY = "*"
+	//DIVIDE   = "/"
 
 	// Delimiters
 	COMMA     = ","
