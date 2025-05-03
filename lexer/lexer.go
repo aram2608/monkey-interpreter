@@ -36,18 +36,20 @@ func (l *Lexer) NextToken() token.Token {
 	switch l.ch {
 	case '=':
 		tok = newToken(token.ASSIGN, l.ch)
+	case ',':
+		tok = newToken(token.COMMA, l.ch)
 	case ';':
 		tok = newToken(token.SEMICOLON, l.ch)
 	case '+':
 		tok = newToken(token.PLUS, l.ch)
-	//case '*':
-	//tok = newToken(token.MULTIPLY, l.ch)
+	case '*':
+		tok = newToken(token.MULTIPLY, l.ch)
 	case '-':
 		tok = newToken(token.MINUS, l.ch)
-	//case '/':
-	//tok = newToken(token.DIVIDE, l.ch)
-	//case '%':
-	//tok = newToken(token.MODULO, l.ch)
+	case '/':
+		tok = newToken(token.DIVIDE, l.ch)
+	case '%':
+		tok = newToken(token.MODULO, l.ch)
 	case '(':
 		tok = newToken(token.LPAREN, l.ch)
 	case ')':
@@ -63,6 +65,8 @@ func (l *Lexer) NextToken() token.Token {
 		// handles unexpected characters
 		tok = newToken(token.ILLEGAL, l.ch)
 	}
+
+	l.readChar() // goofy goober forgot this guy, you cant advance without it
 	return tok
 }
 
