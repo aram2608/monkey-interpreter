@@ -1,24 +1,22 @@
 package token // our token package, in go things are defined as packages
 
 // TokenType is defined as a string
-// allows us to use many different values as TokenType
-// big caveat is that in exchange for flexibility and performance its easier to use
-// easy to debug and what not
-type TokenType string // string is built in to go itself
+type TokenType string
 
-// struct defines data types
+// We create a Token struct that stores the meta data associated with each token
 type Token struct {
 	Type    TokenType
 	Literal string
 }
 
+// We define a set of constant token Type
 const (
 	ILLEGAL = "ILLEGAL"
 	EOF     = "EOF" // end of file
 
 	// identifiers + literals
-	IDENT = "IDENT" // add, foobar, x, y. whatever you feel like
-	INT   = "INT"   // numbas
+	IDENT = "IDENT"
+	INT   = "INT"
 
 	// Operators
 	ASSIGN   = "="

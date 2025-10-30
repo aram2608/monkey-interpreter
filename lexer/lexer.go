@@ -2,31 +2,42 @@ package lexer
 
 import "monkey-interpreter/token"
 
-// defining the lexer structure
+// defining the lexer struct
 type Lexer struct {
-	input        string
-	position     int  // current position in input (points to current character)
-	readPosition int  // cuurent reading position in input (after the current character)
-	ch           byte // current character under examination
+	// The source code/string
+	input string
+	// The current position
+	position int
+	// The current position we are reading
+	readPosition int
+	// The current character as a byte
+	ch byte
 }
 
-// some sort of function that i do not comprehend
+// Function used to increment our string
 func New(input string) *Lexer {
+	// Im assuming we initialize a Lexer given the input
 	l := &Lexer{input: input}
-	l.readChar() // reads characters and increments, the func we made below!
+	// We can then read the characters I presume
+	l.readChar()
+	// We then return the Lexer
 	return l
 }
 
-// a helper function to give us the next character and advance our position
-// checks whether we have reach the end of input
+// Helper method used to readh the current character and advance the position
 func (l *Lexer) readChar() {
+	// We need to make sure the read position is not out of bounds
 	if l.readPosition >= len(l.input) {
+		// If it is we set the current char to 0 to catch the end of file
 		l.ch = 0
 	} else {
-		l.ch = l.input[l.readPosition] // accesses the next position
+		// Otherwise we advance foward
+		l.ch = l.input[l.readPosition]
 	}
+	// We swap the current position
 	l.position = l.readPosition
-	l.readPosition += 1 // increments along the input by 1
+	// We can then increment the read position forward
+	l.readPosition += 1
 }
 
 // brings in NextToken from the token.go package we made
@@ -62,15 +73,17 @@ func (l *Lexer) NextToken() token.Token {
 		tok.Literal = ""
 		tok.Type = token.EOF
 	default:
-		// handles unexpected characters
+		// We handle unexpected characters in our default case
 		tok = newToken(token.ILLEGAL, l.ch)
 	}
 
-	l.readChar() // goofy goober forgot this guy, you cant advance without it
+	// We advance forward in our string after every match
+	l.readChar()
 	return tok
 }
 
-// method to use newToken
+// Helper method to return the proper token type
 func newToken(tokenType token.TokenType, ch byte) token.Token {
+	// We initialize the token given its type and literal value
 	return token.Token{Type: tokenType, Literal: string(ch)}
 }

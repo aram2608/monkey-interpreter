@@ -1,6 +1,6 @@
 package lexer // defines our lexer package
 
-// go test ./... runs all tests in project
+// go test ./... runs all tests in project recursively
 // go mod tidy cleans up dependencies
 // go fmt reformats stuff, pretty nice
 // go vet does something nifty but i forgot
@@ -67,7 +67,7 @@ func TestNextToken(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	l := New(input) // you need to explicitly use package.function when using a method
+	l := New(input)
 
 	for i, tt := range tests {
 		tok := l.NextToken()
