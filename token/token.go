@@ -1,5 +1,19 @@
 package token // our token package, in go things are defined as packages
 
+var keywords = map[string]TokenType{
+	"fn":  FUNCTION,
+	"let": LET,
+}
+
+// Helper method to parse our keywords map and search for the provided keyword
+// If we find a match we return it, otherwise we return an identifier toktype
+func LookupIdent(ident string) TokenType {
+	if tok, ok := keywords[ident]; ok {
+		return tok
+	}
+	return IDENT
+}
+
 // TokenType is defined as a string
 type TokenType string
 

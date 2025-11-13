@@ -1,11 +1,4 @@
-package lexer // defines our lexer package
-
-// go test ./... runs all tests in project recursively
-// go mod tidy cleans up dependencies
-// go fmt reformats stuff, pretty nice
-// go vet does something nifty but i forgot
-// := is a funky little guy
-// it can declare and initilaize a variable in a function in one step
+package lexer
 
 import (
 	"monkey-interpreter/token"
@@ -13,22 +6,21 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	//input := `=+(){},;` // takes literal strings or something, kinda like lark gramar uses """" grammar """"
-
 	input := `let five = 5;
 	let ten = 10;
-	
+
 	let add = fn(x, y) {
 	x + y
 	};
-	
+
 	let result = add(five, ten);`
 
-	// Define the expected tokens for the input
+	// We create a slice of structs that store different test cases for our lexer
 	tests := []struct {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
+		// We initialize each struct with the corresponding type and literal
 		{token.LET, "let"},
 		{token.IDENT, "five"},
 		{token.ASSIGN, "="},
