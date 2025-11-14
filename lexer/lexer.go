@@ -4,44 +4,52 @@ import (
 	"monkey-interpreter/token"
 )
 
-// We define the Lexer struct
+// The Lexer object for Moneky
 type Lexer struct {
-	// The source code/string
-	input string
-	// The current position
-	position int
-	// The current position we are reading
+	input        string
+	position     int
 	readPosition int
-	// The current character as a byte
-	ch byte
+	ch           byte
 }
 
 // Function used to create the lexer, initilaizing it with the input
 // returning a pointer to the Lexer
 func New(input string) *Lexer {
-	// We initialize a Lexer struct in place and return a reference, assigning it
-	// to l
-	l := &Lexer{input: input}
-	// We can then read the character
+	l := &Lexer{
+		input: input,
+	}
 	l.readChar()
-	// We then return the Lexer
 	return l
 }
 
 // Helper method used to read the current character and advance the position
 func (l *Lexer) readChar() {
 	// We need to make sure the read position is not out of bounds
-	if l.readPosition >= len(l.input) {
+	if l.isEnd() {
 		// If it is we set the current char to 0 to catch the end of file
 		l.ch = 0
 	} else {
 		// Otherwise we advance foward
 		l.ch = l.input[l.readPosition]
 	}
-	// We swap the current position
+	// We swap the current position and increment forward
 	l.position = l.readPosition
-	// We can then increment the read position forward
 	l.readPosition += 1
+}
+
+// Helper method to peek at the current character, returns a byte
+func (l *Lexer) peekChar() byte {
+	// We catch out of bounds indexing
+	if l.isEnd() {
+		return 0
+	} else {
+		return l.input[l.readPosition]
+	}
+}
+
+// Helper method to test if we are at the end of the file, returns a boolean
+func (l *Lexer) isEnd() bool {
+	return l.readPosition >= len(l.input)
 }
 
 // Helper method used to match each character to a token type
@@ -54,7 +62,33 @@ func (l *Lexer) NextToken() token.Token {
 	// We catch the new character and match it to each token type case
 	switch l.ch {
 	case '=':
-		tok = newToken(token.ASSIGN, l.ch)
+		if l.peekChar() == '=' {
+			ch := l.ch
+			l.readChar()
+			literal := string(ch) + string(l.ch)
+			tok = token.Token{
+				Type:    token.EQ,
+				Literal: literal,
+			}
+		} else {
+			tok = newToken(token.ASSIGN, l.ch)
+		}
+	case '<':
+		tok = newToken(token.LT, l.ch)
+	case '>':
+		tok = newToken(token.GT, l.ch)
+	case '!':
+		if l.peekChar() == '=' {
+			ch := l.ch
+			l.readChar()
+			literal := string(ch) + string(l.ch)
+			tok = token.Token{
+				Type:    token.NotEQ,
+				Literal: literal,
+			}
+		} else {
+			tok = newToken(token.BANG, l.ch)
+		}
 	case ',':
 		tok = newToken(token.COMMA, l.ch)
 	case ';':

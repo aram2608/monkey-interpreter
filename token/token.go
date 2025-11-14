@@ -1,8 +1,13 @@
 package token // our token package, in go things are defined as packages
 
 var keywords = map[string]TokenType{
-	"fn":  FUNCTION,
-	"let": LET,
+	"fn":     FUNCTION,
+	"let":    LET,
+	"true":   TRUE,
+	"false":  FALSE,
+	"if":     IF,
+	"else":   ELSE,
+	"return": RETURN,
 }
 
 // Helper method to parse our keywords map and search for the provided keyword
@@ -26,7 +31,7 @@ type Token struct {
 // We define a set of constant token Type
 const (
 	ILLEGAL = "ILLEGAL"
-	EOF     = "EOF" // end of file
+	EOF     = "EOF"
 
 	// identifiers + literals
 	IDENT = "IDENT"
@@ -36,9 +41,18 @@ const (
 	ASSIGN   = "="
 	PLUS     = "+"
 	MINUS    = "-"
+	BANG     = "!"
+	STAR     = "*"
+	SLASH    = "/"
 	MODULO   = "%"
 	MULTIPLY = "*"
 	DIVIDE   = "/"
+
+	EQ    = "=="
+	NotEQ = "!="
+
+	LT = "<"
+	GT = ">"
 
 	// Delimiters
 	COMMA     = ","
@@ -52,4 +66,9 @@ const (
 	// Keywords
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
+	TRUE     = "TRUE"
+	FALSE    = "FALSE"
+	IF       = "IF"
+	ELSE     = "ELSE"
+	RETURN   = "return"
 )
